@@ -41,6 +41,7 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Navigation */
 nav {
   width: 100%;
   padding: 1rem 2rem;
@@ -54,7 +55,7 @@ nav {
   align-items: center;
 }
 
-/* Theme toggle button styles */
+/* Theme toggle button */
 .theme-toggle {
   background: none;
   border: none;
@@ -69,28 +70,17 @@ nav {
   height: 40px;
   transition: background-color 0.2s;
 }
-
 .theme-toggle:hover {
   background-color: rgba(127, 127, 127, 0.1);
 }
-
 .theme-toggle svg {
   width: 20px;
   height: 20px;
   transition: transform 0.3s ease;
 }
-
-.theme-toggle .moon-icon {
-  display: none;
-}
-
-[data-theme="dark"] .sun-icon {
-  display: none;
-}
-
-[data-theme="dark"] .moon-icon {
-  display: block;
-}
+.theme-toggle .moon-icon { display: none; }
+[data-theme="dark"] .sun-icon { display: none; }
+[data-theme="dark"] .moon-icon { display: block; }
 
 .logo {
   color: var(--primary-color);
@@ -104,8 +94,6 @@ nav {
   list-style: none;
   display: flex;
   gap: 1.5rem;
-  margin: 0;
-  padding: 0;
 }
 
 .nav-links li a {
@@ -113,15 +101,14 @@ nav {
   text-decoration: none;
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
-  font-size: 1rem;
   transition: all 0.2s ease;
 }
-
 .nav-links li a:hover {
   color: var(--primary-color);
   background-color: rgba(44, 107, 237, 0.08);
 }
 
+/* Main container */
 main {
   width: 100%;
   max-width: 1200px;
@@ -135,12 +122,12 @@ main {
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   padding: 1rem;
   margin-top: 1rem;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Form elements with consistent, ergonomic styling */
+/* Input styles */
 input[type="text"],
-input[type="tel"] {
+input[type="tel"],
+input[type="time"] {
   width: 100%;
   max-width: 400px;
   padding: 0.75rem 1rem;
@@ -150,16 +137,18 @@ input[type="tel"] {
   border: 2px solid var(--border-color);
   border-radius: 8px;
   transition: all 0.2s ease;
+  color: var(--text-color);
 }
 
 input[type="text"]:focus,
-input[type="tel"]:focus {
+input[type="tel"]:focus,
+input[type="time"]:focus {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 3px var(--focus-color);
 }
 
-/* Table styling for better readability */
+/* Table styles */
 table {
   width: 100%;
   border-collapse: separate;
@@ -174,17 +163,28 @@ td {
   padding: 0.75rem;
   border-bottom: 1px solid var(--border-color);
   border-right: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+td:last-child { border-right: none; }
+tr:last-child td { border-bottom: none; }
+
+/* ✅ Highlight first row (time row) */
+table tr:first-child td {
+  background-color: rgba(44, 107, 237, 0.05);
+  font-weight: 500;
+  text-align: center;
 }
 
-td:last-child {
-  border-right: none;
+/* Make time inputs centered & compact */
+input[type="time"] {
+  text-align: center;
+  width: 100%;
+  max-width: none;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
-tr:last-child td {
-  border-bottom: none;
-}
-
-/* Button styling for clear hierarchy and feedback */
+/* Button group */
 .buttons {
   display: flex;
   gap: 0.75rem;
@@ -195,7 +195,6 @@ tr:last-child td {
 button {
   padding: 0.75rem 1.25rem;
   font-size: 0.875rem;
-  font-weight: 500;
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -204,7 +203,6 @@ button {
   border: 1px solid var(--border-color);
   color: var(--text-color);
 }
-
 button:hover {
   background: var(--background-light);
   border-color: var(--primary-color);
@@ -213,9 +211,7 @@ button:hover {
 #addRowBtn, #addColBtn {
   background-color: var(--primary-color);
   color: white;
-  border: none;
 }
-
 #addRowBtn:hover, #addColBtn:hover {
   background-color: var(--primary-dark);
 }
@@ -225,7 +221,6 @@ button:hover {
   border: 1px solid var(--error-color);
   color: var(--error-color);
 }
-
 #delRowBtn:hover, #delColBtn:hover {
   background-color: var(--error-color);
   color: white;
@@ -239,74 +234,27 @@ button:hover {
   font-size: 1rem;
   margin-top: 1rem;
 }
-
 #submitBtn:hover {
   background-color: var(--primary-dark);
 }
 
-/* Message styling */
+/* Message area */
 #msg {
   margin-top: 1rem;
   padding: 1rem;
   border-radius: 6px;
   font-weight: 500;
 }
-
 #msg.success {
   background-color: rgba(40, 167, 69, 0.1);
   color: var(--success-color);
 }
-
 #msg.error {
   background-color: rgba(220, 53, 69, 0.1);
   color: var(--error-color);
 }
 
-/* Form structure and typography */
-h1 {
-  color: var(--text-color);
-  font-size: 1.75rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-  letter-spacing: -0.5px;
-}
-
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: var(--text-color);
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .container-main {
-    padding: 1.5rem;
-  }
-  
-  .buttons {
-    flex-direction: column;
-  }
-  
-  button {
-    width: 100%;
-  }
-  
-  .nav-links {
-    gap: 1rem;
-  }
-  
-  table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-}
-
+/* Footer */
 footer {
   text-align: center;
   padding: 1rem 0;
@@ -314,4 +262,12 @@ footer {
   background-color: var(--background-light);
   margin-top: 2rem;
   border-top: 1px solid var(--border-color);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container-main { padding: 1.5rem; }
+  .buttons { flex-direction: column; }
+  button { width: 100%; }
+  table { display: block; overflow-x: auto; white-space: nowrap; }
 }
