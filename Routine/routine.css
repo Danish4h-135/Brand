@@ -41,7 +41,6 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Navigation */
 nav {
   width: 100%;
   padding: 1rem 2rem;
@@ -55,7 +54,6 @@ nav {
   align-items: center;
 }
 
-/* Theme toggle button */
 .theme-toggle {
   background: none;
   border: none;
@@ -108,7 +106,6 @@ nav {
   background-color: rgba(44, 107, 237, 0.08);
 }
 
-/* Main container */
 main {
   width: 100%;
   max-width: 1200px;
@@ -124,7 +121,6 @@ main {
   margin-top: 1rem;
 }
 
-/* Input styles */
 input[type="text"],
 input[type="tel"],
 input[type="time"] {
@@ -148,7 +144,6 @@ input[type="time"]:focus {
   box-shadow: 0 0 0 3px var(--focus-color);
 }
 
-/* Table styles */
 table {
   width: 100%;
   border-collapse: separate;
@@ -168,14 +163,12 @@ td {
 td:last-child { border-right: none; }
 tr:last-child td { border-bottom: none; }
 
-/* ✅ Highlight first row (time row) */
 table tr:first-child td {
   background-color: rgba(44, 107, 237, 0.05);
   font-weight: 500;
   text-align: center;
 }
 
-/* Make time inputs centered & compact */
 input[type="time"] {
   text-align: center;
   width: 100%;
@@ -184,7 +177,6 @@ input[type="time"] {
   letter-spacing: 0.5px;
 }
 
-/* Button group */
 .buttons {
   display: flex;
   gap: 0.75rem;
@@ -238,7 +230,6 @@ button:hover {
   background-color: var(--primary-dark);
 }
 
-/* Message area */
 #msg {
   margin-top: 1rem;
   padding: 1rem;
@@ -254,7 +245,40 @@ button:hover {
   color: var(--error-color);
 }
 
-/* Footer */
+.contact {
+  display: flex;
+  justify-content: flex-start; /* left by default, overwritten in mobile if needed */
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.whatsapp-btn:hover {
+  background: var(--primary-dark);
+}
+
+.whatsapp-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+
+.whatsapp-icon { color: white; }
+.whatsapp-btn svg.whatsapp-icon path { fill: currentColor; }
+
 footer {
   text-align: center;
   padding: 1rem 0;
@@ -264,10 +288,80 @@ footer {
   border-top: 1px solid var(--border-color);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
-  .container-main { padding: 1.5rem; }
-  .buttons { flex-direction: column; }
-  button { width: 100%; }
-  table { display: block; overflow-x: auto; white-space: nowrap; }
+  .container-main {
+    padding: 1.2rem;
+  }
+
+  .buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  button {
+    width: 100%;
+  }
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
 }
+
+.whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 320px;
+  padding: 0.9rem 1.2rem;
+  background-color: #25D366;
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: all 0.25s ease;
+}
+
+.whatsapp-btn:hover {
+  background-color: #1EBE57;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+}
+
+.whatsapp-icon {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
+  .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 1rem;
+  }
+
+  table {
+    width: max-content;
+    min-width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  td input {
+    min-width: 120px;
+    font-size: 1rem;
+  }
+
+  input[type="text"], input[type="time"] {
+    width: 100%;
+    min-width: 100px;
+  }
+}
+
