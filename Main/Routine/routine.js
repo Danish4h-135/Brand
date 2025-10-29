@@ -1,3 +1,10 @@
+// Early theme initialization
+(function initEarlyTheme() {
+  const savedTheme = localStorage.getItem("theme") || "light";
+  document.documentElement.setAttribute("data-theme", savedTheme);
+})();
+
+// Table controls
 function addRow() {
   const table = document.getElementById("routineTable");
   const row = table.insertRow();
@@ -13,10 +20,8 @@ function addRow() {
 
 function addColumn() {
   const table = document.getElementById("routineTable");
-
   const firstRow = table.rows[0];
   const isTimeRow = firstRow && firstRow.querySelector("input[type='time']");
-
   for (let i = 0; i < table.rows.length; i++) {
     const cell = table.rows[i].insertCell();
     const input = document.createElement("input");
@@ -26,31 +31,9 @@ function addColumn() {
   }
 }
 
-// Loading dots animation helper
-let __loadingInterval = null;
-function startLoading(el, baseText = 'Submitting, please be patient') {
-  if (!el) return;
-  // ensure we don't start multiple intervals
-  stopLoading();
-  el.style.color = '';
-  el.textContent = baseText;
-  let dots = 0;
-  __loadingInterval = setInterval(() => {
-    dots = (dots + 1) % 4; // 0..3
-    el.textContent = baseText + '.'.repeat(dots);
-  }, 500);
-}
-
-function stopLoading() {
-  if (__loadingInterval) {
-    clearInterval(__loadingInterval);
-    __loadingInterval = null;
-  }
-}
-
 function deleteLastRow() {
   const table = document.getElementById("routineTable");
-  if (table.rows.length > 2) table.deleteRow(-1);
+  if (table.rows.length > 1) table.deleteRow(-1);
 }
 
 function deleteLastColumn() {
@@ -63,38 +46,56 @@ function deleteLastColumn() {
   }
 }
 
+// Loading animation
+let __loadingInterval = null;
+function startLoading(el, baseText = 'Submitting, please wait') {
+  stopLoading();
+  let dots = 0;
+  __loadingInterval = setInterval(() => {
+    dots = (dots + 1) % 4;
+    el.textContent = baseText + '.'.repeat(dots);
+  }, 500);
+}
+function stopLoading() {
+  clearInterval(__loadingInterval);
+  __loadingInterval = null;
+}
+
+// Submit data
 async function submitData() {
   const msg = document.getElementById("msg");
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
-  const suggestion = document.querySelector(".suggestions input").value.trim(); // 👈 added
+  const suggestion = document.getElementById("suggestion").value.trim();
 
   if (!name || !phone) {
-    msg.innerText = "Enter name & phone.";
+    msg.textContent = "Please enter name & phone.";
     return;
   }
 
   const table = document.getElementById("routineTable");
   const routine = [];
   for (let i = 0; i < table.rows.length; i++) {
-    const row = [];
-    const inputs = table.rows[i].querySelectorAll("input");
-    inputs.forEach((inp) => row.push(inp.value.trim()));
-    if (row.some((v) => v !== "")) routine.push(row);
+    const row = Array.from(table.rows[i].querySelectorAll("input")).map(
+      (inp) => inp.value.trim()
+    );
+    if (row.some((v) => v)) routine.push(row);
   }
 
   if (!routine.length) {
-    msg.innerText = "Add at least one entry.";
+    msg.textContent = "Add at least one entry.";
     return;
   }
 
-  msg.style.color = '';
-  startLoading(msg, 'Submitting, please be patient');
+  msg.style.color = "";
+  startLoading(msg);
 
-  const payload = { name, phone, routine, suggestion }; // 👈 include suggestion
-  const url = window.location.hostname === "localhost"
-    ? "http://localhost:5000/submit"
-    : "https://ilmiq.onrender.com/submit";
+  const payload = { name, phone, routine, suggestion };
+  const url =
+    window.location.hostname === "localhost"
+      ? "http://localhost:5000/submit"
+      : "https://ilmiq-backend.onrender.com/submit";
+
   try {
     const res = await fetch(url, {
       method: "POST",
@@ -105,25 +106,19 @@ async function submitData() {
     stopLoading();
     if (result.ok) {
       msg.style.color = "green";
-      msg.innerHTML = `✅ Uploaded successfully! Our designer will contact you soon.`;
+      msg.innerHTML = "✅ Uploaded successfully! Our designer will contact you soon.";
     } else {
       msg.style.color = "red";
-      msg.innerText = "Error: " + result.error;
+      msg.textContent = "Error: " + result.error;
     }
   } catch (err) {
     stopLoading();
     msg.style.color = "red";
-    msg.innerText = "Submit failed.";
+    msg.textContent = "Submit failed. Please try again.";
   }
 }
 
-
 // Theme management
-function initTheme() {
-  const savedTheme = localStorage.getItem("theme") || "light";
-  document.documentElement.setAttribute("data-theme", savedTheme);
-}
-
 function toggleTheme() {
   const currentTheme = document.documentElement.getAttribute("data-theme");
   const newTheme = currentTheme === "dark" ? "light" : "dark";
@@ -137,8 +132,5 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("delRowBtn").onclick = deleteLastRow;
   document.getElementById("delColBtn").onclick = deleteLastColumn;
   document.getElementById("submitBtn").onclick = submitData;
-
-  // Initialize theme
-  initTheme();
   document.getElementById("themeToggle").onclick = toggleTheme;
 });
