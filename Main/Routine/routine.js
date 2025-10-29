@@ -94,7 +94,7 @@ async function submitData() {
   const payload = { name, phone, routine, suggestion }; // 👈 include suggestion
   const url = window.location.hostname === "localhost"
     ? "http://localhost:5000/submit"
-    : "https://ilmiq-backend.onrender.com/submit";
+    : "https://ilmiq.onrender.com/submit";
   try {
     const res = await fetch(url, {
       method: "POST",
