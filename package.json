@@ -1,4 +1,12 @@
 {
+  "name": "ilmiq",
+  "version": "1.0.0",
+  "description": "Ilmiq Routine Planner with Google Sheets integration",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",

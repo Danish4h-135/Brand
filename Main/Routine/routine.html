@@ -3,6 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Plan your daily routines easily with Ilmiq — the creative visual planner that syncs directly with Google Sheets."
+    />
+    <meta property="og:title" content="Ilmiq — Smart Routine Planner" />
+    <meta
+      property="og:description"
+      content="Plan your day effortlessly and share your routine with designers in one click."
+    />
+    <meta property="og:image" content="/Assets/preview.png" />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#4f46e5" />
+
     <title>Routine Upload</title>
     <link rel="stylesheet" href="routine.css" />
   </head>
@@ -15,12 +28,22 @@
           <li><a href="#">About</a></li>
           <li><a href="#">Contact</a></li>
           <li>
-            <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+            <button
+              id="themeToggle"
+              class="theme-toggle"
+              aria-label="Toggle theme"
+            >
               <svg class="sun-icon" viewBox="0 0 24 24" width="24" height="24">
-                <path fill="currentColor" d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
+                <path
+                  fill="currentColor"
+                  d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"
+                />
               </svg>
               <svg class="moon-icon" viewBox="0 0 24 24" width="24" height="24">
-                <path fill="currentColor" d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+                <path
+                  fill="currentColor"
+                  d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"
+                />
               </svg>
             </button>
           </li>
@@ -32,12 +55,7 @@
         <h1>Your Routine Planner</h1>
         <div class="form-group">
           <label for="name">Your Name</label>
-          <input
-            id="name"
-            type="text"
-            placeholder="Enter your name"
-            required
-          />
+          <input id="name" type="text" placeholder="Enter your name" required />
         </div>
         <div class="buttons">
           <button id="addRowBtn">+ Add Row</button>
@@ -46,7 +64,6 @@
           <button id="delColBtn">− Remove Column</button>
         </div>
         <div class="table-wrapper">
-
           <table id="routineTable">
             <tr>
               <td><input type="text" placeholder="Enter your text" /></td>
@@ -65,39 +82,46 @@
             </tr>
           </table>
         </div>
-          <div class="suggestions">
-            <input type="text" placeholder="Any suggestions??">
-          </div>
-          <div class="form-group">
-            <label for="phone">WhatsApp Number</label>
-            <input
+        <div class="suggestions">
+          <input type="text" placeholder="Any suggestions??" />
+        </div>
+        <div class="form-group">
+          <label for="phone">WhatsApp Number</label>
+          <input
             id="phone"
             type="tel"
             placeholder="Enter WhatsApp number"
             required
-            />
-          </div>
-          <div class="contact">
-            <a
-              href="https://wa.me/919113674709?text=Hi!%20I%20just%20submitted%20my%20routine%20😊"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="whatsapp-btn"
-              role="button"
-              aria-label="Chat on WhatsApp"
+          />
+        </div>
+        <div class="contact">
+          <a
+            href="https://wa.me/919113674709?text=Hi!%20I%20just%20submitted%20my%20routine%20😊"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="whatsapp-btn"
+            role="button"
+            aria-label="Chat on WhatsApp"
+          >
+            <!-- Inline WhatsApp-style icon to avoid external file dependency -->
+            <svg
+              class="whatsapp-icon"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              focusable="false"
             >
-              <!-- Inline WhatsApp-style icon to avoid external file dependency -->
-              <svg class="whatsapp-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <title>WhatsApp</title>
-                <path fill="currentColor" d="M20.5 3.5A11.9 11.9 0 0012 .5 11.9 11.9 0 003.5 3.5 11.9 11.9 0 00.5 12c0 2.1.55 4.14 1.6 5.95L0 24l5.3-1.55A11.9 11.9 0 0012 23.5c2.1 0 4.14-.55 5.95-1.6A11.9 11.9 0 0023.5 12 11.9 11.9 0 0020.5 3.5zM12 21c-1.8 0-3.55-.45-5.08-1.3l-.36-.2-3.15.92.92-3.07-.23-.37A8.3 8.3 0 013.5 12 8.5 8.5 0 0112 3.5 8.5 8.5 0 0120.5 12 8.5 8.5 0 0112 21zm4.5-6.2c-.24-.12-1.43-.7-1.65-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.92-1.19-.71-.63-1.19-1.41-1.33-1.65-.14-.24-.015-.36.106-.48.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.46-.4-.4-.55-.4-.14 0-.3-.02-.46-.02-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.7 2.6 4.12 3.64 2.42 1.06 2.42.71 2.86.66.44-.06 1.43-.58 1.63-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28z"/>
-              </svg>
-              <span>Let's Chat on WhatsApp</span>
-            </a>
-          </div>
+              <title>WhatsApp</title>
+              <path
+                fill="currentColor"
+                d="M20.5 3.5A11.9 11.9 0 0012 .5 11.9 11.9 0 003.5 3.5 11.9 11.9 0 00.5 12c0 2.1.55 4.14 1.6 5.95L0 24l5.3-1.55A11.9 11.9 0 0012 23.5c2.1 0 4.14-.55 5.95-1.6A11.9 11.9 0 0023.5 12 11.9 11.9 0 0020.5 3.5zM12 21c-1.8 0-3.55-.45-5.08-1.3l-.36-.2-3.15.92.92-3.07-.23-.37A8.3 8.3 0 013.5 12 8.5 8.5 0 0112 3.5 8.5 8.5 0 0120.5 12 8.5 8.5 0 0112 21zm4.5-6.2c-.24-.12-1.43-.7-1.65-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.92-1.19-.71-.63-1.19-1.41-1.33-1.65-.14-.24-.015-.36.106-.48.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.46-.4-.4-.55-.4-.14 0-.3-.02-.46-.02-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.7 2.6 4.12 3.64 2.42 1.06 2.42.71 2.86.66.44-.06 1.43-.58 1.63-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28z"
+              />
+            </svg>
+            <span>Let's Chat on WhatsApp</span>
+          </a>
+        </div>
 
-
-          <button id="submitBtn">Submit Routine</button>
-          <p id="msg"></p>
+        <button id="submitBtn">Submit Routine</button>
+        <p id="msg"></p>
       </div>
     </main>
     <footer>

@@ -67,6 +67,8 @@ async function submitData() {
   const msg = document.getElementById("msg");
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
+  const suggestion = document.querySelector(".suggestions input").value.trim(); // 👈 added
+
   if (!name || !phone) {
     msg.innerText = "Enter name & phone.";
     return;
@@ -81,16 +83,15 @@ async function submitData() {
     if (row.some((v) => v !== "")) routine.push(row);
   }
 
-
   if (!routine.length) {
     msg.innerText = "Add at least one entry.";
     return;
   }
-  // Start animated loading dots
+
   msg.style.color = '';
   startLoading(msg, 'Submitting, please be patient');
 
-  const payload = { name, phone, routine };
+  const payload = { name, phone, routine, suggestion }; // 👈 include suggestion
   const url = "/submit";
 
   try {
@@ -103,7 +104,7 @@ async function submitData() {
     stopLoading();
     if (result.ok) {
       msg.style.color = "green";
-      msg.innerHTML = `Uploaded! We will contact you soon!!`;
+      msg.innerHTML = `✅ Uploaded successfully! Our designer will contact you soon.`;
     } else {
       msg.style.color = "red";
       msg.innerText = "Error: " + result.error;
@@ -114,6 +115,7 @@ async function submitData() {
     msg.innerText = "Submit failed.";
   }
 }
+
 
 // Theme management
 function initTheme() {

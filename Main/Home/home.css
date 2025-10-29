@@ -61,10 +61,11 @@ body {
   font-weight: 700;
   background: linear-gradient(90deg, var(--primary), var(--accent));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.5px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.3s; 
 }
 
 .logo:hover {
@@ -111,11 +112,62 @@ body {
   border: none;
   color: var(--text);
   cursor: pointer;
-  transition: transform 0.3s ease;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .theme-toggle:hover {
   transform: rotate(15deg);
+  background: var(--border);
+}
+
+.theme-toggle .sun,
+.theme-toggle .moon {
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle .sun {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.theme-toggle .moon {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+[data-theme="dark"] .theme-toggle .sun {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+[data-theme="dark"] .theme-toggle .moon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Add ripple effect */
+.theme-toggle.ripple {
+  animation: ripple 0.3s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* ========== HERO SECTION ========== */
@@ -146,6 +198,7 @@ body {
   margin-bottom: 1rem;
   background: linear-gradient(90deg, var(--primary), var(--accent));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
