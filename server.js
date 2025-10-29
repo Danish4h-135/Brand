@@ -14,7 +14,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, "Main")));
+// Serve the entire project directory
+app.use(express.static(path.join(__dirname)));
+// Serve Main directory at root
+app.use('/', express.static(path.join(__dirname, "Main")));
 
 const GOOGLE_SCRIPT_URL = process.env.GOOGLE_SCRIPT_URL; // Loaded securely
 
