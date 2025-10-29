@@ -7,9 +7,10 @@
 // Table controls
 function addRow() {
   const table = document.getElementById("routineTable");
+  if (!table || !table.rows.length) return;
   const row = table.insertRow();
-  const headerCount = table.rows[0].cells.length;
-  for (let i = 0; i < headerCount; i++) {
+  const colCount = table.rows[0].cells.length;
+  for (let i = 0; i < colCount; i++) {
     const cell = row.insertCell();
     const input = document.createElement("input");
     input.type = "text";
@@ -20,12 +21,15 @@ function addRow() {
 
 function addColumn() {
   const table = document.getElementById("routineTable");
+  if (!table || !table.rows.length) return;
+
   const firstRow = table.rows[0];
-  const isTimeRow = firstRow && firstRow.querySelector("input[type='time']");
-  for (let i = 0; i < table.rows.length; i++) {
-    const cell = table.rows[i].insertCell();
+  const hasTimeInFirstRow = !!firstRow.querySelector("input[type='time']");
+
+  for (let r = 0; r < table.rows.length; r++) {
+    const cell = table.rows[r].insertCell();
     const input = document.createElement("input");
-    input.type = i === 0 && isTimeRow ? "time" : "text";
+    input.type = (r === 0 && hasTimeInFirstRow) ? "time" : "text";
     input.placeholder = "Enter your text";
     cell.appendChild(input);
   }
@@ -33,68 +37,100 @@ function addColumn() {
 
 function deleteLastRow() {
   const table = document.getElementById("routineTable");
+  if (!table) return;
+  // keep at least 1 row
   if (table.rows.length > 1) table.deleteRow(-1);
 }
 
 function deleteLastColumn() {
   const table = document.getElementById("routineTable");
+  if (!table || !table.rows.length) return;
   const cols = table.rows[0].cells.length;
+  // keep at least 1 column
   if (cols > 1) {
-    for (let i = 0; i < table.rows.length; i++) {
-      table.rows[i].deleteCell(-1);
+    for (let r = 0; r < table.rows.length; r++) {
+      table.rows[r].deleteCell(-1);
     }
   }
 }
 
 // Loading animation
 let __loadingInterval = null;
-function startLoading(el, baseText = 'Submitting, please wait') {
+function startLoading(el, baseText = "Submitting, please wait") {
+  if (!el) return;
   stopLoading();
+  el.textContent = baseText; // show immediately
   let dots = 0;
   __loadingInterval = setInterval(() => {
     dots = (dots + 1) % 4;
-    el.textContent = baseText + '.'.repeat(dots);
+    el.textContent = baseText + ".".repeat(dots);
   }, 500);
 }
 function stopLoading() {
-  clearInterval(__loadingInterval);
-  __loadingInterval = null;
+  if (__loadingInterval !== null) {
+    clearInterval(__loadingInterval);
+    __loadingInterval = null;
+  }
 }
 
 // Submit data
+let submitting = false;
 async function submitData() {
+  if (submitting) return; // prevent double clicks
   const msg = document.getElementById("msg");
-  const name = document.getElementById("name").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const suggestion = document.getElementById("suggestion").value.trim();
+  const nameEl = document.getElementById("name");
+  const phoneEl = document.getElementById("phone");
+  const suggestionEl = document.getElementById("suggestion");
+  const submitBtn = document.getElementById("submitBtn");
+
+  const name = nameEl ? nameEl.value.trim() : "";
+  const phone = phoneEl ? phoneEl.value.trim() : "";
+  const suggestion = suggestionEl ? suggestionEl.value.trim() : "";
 
   if (!name || !phone) {
-    msg.textContent = "Please enter name & phone.";
+    if (msg) {
+      msg.style.color = "red";
+      msg.textContent = "Please enter name & phone.";
+    }
     return;
   }
 
   const table = document.getElementById("routineTable");
-  const routine = [];
-  for (let i = 0; i < table.rows.length; i++) {
-    const row = Array.from(table.rows[i].querySelectorAll("input")).map(
-      (inp) => inp.value.trim()
-    );
-    if (row.some((v) => v)) routine.push(row);
-  }
-
-  if (!routine.length) {
-    msg.textContent = "Add at least one entry.";
+  if (!table) {
+    if (msg) {
+      msg.style.color = "red";
+      msg.textContent = "Table not found.";
+    }
     return;
   }
 
-  msg.style.color = "";
-  startLoading(msg);
+  const routine = [];
+  for (let i = 0; i < table.rows.length; i++) {
+    const inputs = Array.from(table.rows[i].querySelectorAll("input"));
+    const row = inputs.map(inp => (inp.value || "").trim());
+    // Keep only non-empty rows
+    if (row.some(v => v !== "")) routine.push(row);
+  }
+
+  if (!routine.length) {
+    if (msg) {
+      msg.style.color = "red";
+      msg.textContent = "Add at least one entry.";
+    }
+    return;
+  }
+
+  if (msg) {
+    msg.style.color = "";
+    startLoading(msg, "Submitting, please wait");
+  }
+  if (submitBtn) submitBtn.disabled = true;
+  submitting = true;
 
   const payload = { name, phone, routine, suggestion };
-  const url =
-    window.location.hostname === "localhost"
-      ? "http://localhost:5000/submit"
-      : "https://ilmiq-backend.onrender.com/submit";
+  const url = (window.location.hostname === "localhost")
+    ? "http://localhost:5000/submit"
+    : "https://ilmiq-backend.onrender.com/submit";
 
   try {
     const res = await fetch(url, {
@@ -102,19 +138,45 @@ async function submitData() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
-    const result = await res.json();
-    stopLoading();
-    if (result.ok) {
-      msg.style.color = "green";
-      msg.innerHTML = "✅ Uploaded successfully! Our designer will contact you soon.";
+
+    let result;
+    const ct = res.headers.get("content-type") || "";
+    if (ct.includes("application/json")) {
+      result = await res.json();
     } else {
-      msg.style.color = "red";
-      msg.textContent = "Error: " + result.error;
+      const text = await res.text();
+      try {
+        result = JSON.parse(text);
+      } catch {
+        result = { ok: false, error: "Non-JSON response from server", raw: text };
+      }
+    }
+
+    stopLoading();
+    if (submitBtn) submitBtn.disabled = false;
+    submitting = false;
+
+    if (result.ok) {
+      if (msg) {
+        msg.style.color = "green";
+        msg.innerHTML = "✅ Uploaded successfully! Our designer will contact you soon.";
+      }
+    } else {
+      if (msg) {
+        msg.style.color = "red";
+        msg.textContent = "Error: " + (result.error || "Unknown error");
+      }
     }
   } catch (err) {
     stopLoading();
-    msg.style.color = "red";
-    msg.textContent = "Submit failed. Please try again.";
+    if (submitBtn) submitBtn.disabled = false;
+    submitting = false;
+
+    if (msg) {
+      msg.style.color = "red";
+      msg.textContent = "Submit failed. Please try again.";
+    }
+    console.error("Submit error:", err);
   }
 }
 
@@ -127,10 +189,17 @@ function toggleTheme() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("addRowBtn").onclick = addRow;
-  document.getElementById("addColBtn").onclick = addColumn;
-  document.getElementById("delRowBtn").onclick = deleteLastRow;
-  document.getElementById("delColBtn").onclick = deleteLastColumn;
-  document.getElementById("submitBtn").onclick = submitData;
-  document.getElementById("themeToggle").onclick = toggleTheme;
+  const addRowBtn = document.getElementById("addRowBtn");
+  const addColBtn = document.getElementById("addColBtn");
+  const delRowBtn = document.getElementById("delRowBtn");
+  const delColBtn = document.getElementById("delColBtn");
+  const submitBtn = document.getElementById("submitBtn");
+  const themeToggleBtn = document.getElementById("themeToggle");
+
+  if (addRowBtn) addRowBtn.onclick = addRow;
+  if (addColBtn) addColBtn.onclick = addColumn;
+  if (delRowBtn) delRowBtn.onclick = deleteLastRow;
+  if (delColBtn) delColBtn.onclick = deleteLastColumn;
+  if (submitBtn) submitBtn.onclick = submitData;
+  if (themeToggleBtn) themeToggleBtn.onclick = toggleTheme;
 });
